@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
     private float _groundCheckRadius = 0.2f;
     private float _mouseSens = 2f;
     private float _yRotation = 0f;
+    private SystemInventory _inventory;
 
     public Transform cameraTransform;
     public LayerMask groundLayer;
@@ -21,6 +22,7 @@ public class PlayerControl : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         _rb = GetComponent<Rigidbody>();
+        _inventory = GetComponent<SystemInventory>();
     }
 
     void Update()
@@ -75,8 +77,7 @@ public class PlayerControl : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(groundCheck.position, _groundCheckRadius, groundLayer);
 
-        // Проверяем ввод для прыжка
-        if (_isGrounded && Input.GetButtonDown("Jump")) // По умолчанию клавиша "Jump" - это пробел
+        if (_isGrounded && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -86,4 +87,10 @@ public class PlayerControl : MonoBehaviour
     {
         _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
+
+    public void PickUpItem(int itemID)
+    {
+        _inventory.AddItem(itemID);
+    }
+
 }
