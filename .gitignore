@@ -1,0 +1,52 @@
+# This is a Unity .gitignore file
+
+# This ignores Temp files, which are created by Unity
+[Tt]emp/
+
+# This ignores Build results
+[Bb]uild/
+[Bb]uilds/
+
+# This ignores the Library folder
+[Ll]ibrary/
+
+# This ignores the UserSettings folder
+[Uu]ser[Ss]ettings/
+
+# This ignores the obj folder which is created in the root of the project
+[Oo]bj/
+
+# This ignores the logs folder
+[Ll]ogs/
+
+# These file types can also be ignored
+*.sublime-project
+*.sublime-workspace
+*.sln
+*.userprefs
+*.csproj
+*.pidb.meta
+*.suo
+*.user
+*.userprefs
+
+# Ignore Visual Studio stuff
+.vscode/
+.idea/
+.vs/
+*.sln
+*.csproj
+*.user
+*.unityproj
+*.booproj
+
+# Ignore JetBrains Rider files
+.idea/
+*.sln.iml
+
+# Ignore other common files
+.DS_Store
+Thumbs.db
+
+# Uncomment this line if you want to ignore all backups created by Unity
+# [Bb]ak/
