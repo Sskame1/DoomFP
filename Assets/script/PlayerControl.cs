@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    private float _jumpForce = 5f;
     private float _moveSpeed = 5f;
     private float _groundCheckRadius = 0.2f;
     private float _mouseSens = 2f;
@@ -12,16 +13,19 @@ public class PlayerControl : MonoBehaviour
     public Transform groundCheck;
     public Transform PlayerBody;
 
+    private Rigidbody _rb;
+
     private bool _isGrounded;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        _rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-
+        CheckedCharacterOnGround();
         RotationCharacter();
 
         Vector3 dir = GetInputDirection();
@@ -65,5 +69,21 @@ public class PlayerControl : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
 
         PlayerBody.Rotate(Vector3.up * mouseX);
+    }
+
+    private void CheckedCharacterOnGround()
+    {
+        _isGrounded = Physics.CheckSphere(groundCheck.position, _groundCheckRadius, groundLayer);
+
+        // Проверяем ввод для прыжка
+        if (_isGrounded && Input.GetButtonDown("Jump")) // По умолчанию клавиша "Jump" - это пробел
+        {
+            Jump();
+        }
+    }
+
+    private void Jump()
+    {
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
 }
