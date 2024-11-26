@@ -1,11 +1,21 @@
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     private float moveSpeed = 5f;
     public Transform cameraTransform;
 
     void Update()
+    {
+        Vector3 dir = GetInputDirection();
+
+        if (dir.magnitude >= 0.1f)
+        {
+            MoveCharacter(dir);
+        }
+    }
+
+    private Vector3 GetInputDirection()
     {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
@@ -19,11 +29,11 @@ public class PlayerMove : MonoBehaviour
         right.Normalize();
 
         Vector3 direction = (forward * ver + right * hor).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
+        return direction;
+    }
+    
+    private void MoveCharacter (Vector3 direction)
+    {
+        transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }

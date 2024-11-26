@@ -13,11 +13,10 @@ public class PlayerRotation : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSens;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSens;
 
         yRotation += mouseX;
         //yRotation = Mathf.Clamp(yRotation, -90f, 90f);
