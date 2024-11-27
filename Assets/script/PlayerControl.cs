@@ -8,6 +8,11 @@ public class PlayerControl : MonoBehaviour
     private float _mouseSens = 2f;
     private float _yRotation = 0f;
     private SystemInventory _inventory;
+    private float _dashSpeed = 5f;
+    public float _dashDuration = 0.2f;
+    private float _timeSinceLastPress = 0f;
+    private float _GroundJumpValue = 0f;
+
 
     public Transform cameraTransform;
     public LayerMask groundLayer;
@@ -17,6 +22,8 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody _rb;
 
     private bool _isGrounded;
+    private bool _isDashing;
+    private bool _isKeyPressed;
 
     private void Start()
     {
@@ -35,6 +42,31 @@ public class PlayerControl : MonoBehaviour
         if (dir.magnitude >= 0.1f)
         {
             MoveCharacter(dir);
+        }
+
+        if (Input.GetKey(KeyCode.W) && !_isGrounded)
+        {
+            _isKeyPressed = true;
+            _dashSpeed += 0.1f * Time.deltaTime;
+        }
+        else if (_isKeyPressed) 
+        {
+            _timeSinceLastPress += Time.deltaTime;
+            if (_timeSinceLastPress >= 1f)
+            {
+                _dashSpeed = 2f;
+                _isKeyPressed = false;
+            }
+        }
+
+        if (_isDashing)
+        {
+            Dash(dir);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isDashing)
+        {
+            _isDashing = true;
         }
     }
 
@@ -77,8 +109,14 @@ public class PlayerControl : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(groundCheck.position, _groundCheckRadius, groundLayer);
 
-        if (_isGrounded && Input.GetButtonDown("Jump"))
+        if (_isGrounded )
         {
+            _GroundJumpValue = 1f;
+        }
+
+        if (_GroundJumpValue == 1 && Input.GetButtonDown("Jump"))
+        {
+            _GroundJumpValue = 0;
             Jump();
         }
     }
@@ -91,6 +129,11 @@ public class PlayerControl : MonoBehaviour
     public void PickUpItem(int itemID)
     {
         _inventory.AddItem(itemID);
+    }
+
+    private void Dash(Vector3 direction)
+    {
+        transform.position = Vector3.Lerp(transform.position, transform.position + direction.normalized * _moveSpeed * _dashSpeed, Time.deltaTime / _dashDuration);
     }
 
 }

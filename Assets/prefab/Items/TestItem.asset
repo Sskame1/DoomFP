@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0add76fe847ae4b8d8ee0919d519b7, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: "\u0422\u0435\u0441\u0442\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442"
   itemIcon: {fileID: 0}
   itemID: 0
+  quantity: 0

@@ -9,10 +9,7 @@ public class SystemInventory : MonoBehaviour
 
     void Start()
     {
-        foreach (Item item in items)
-        {
-            item.ResetQuantity();
-        }
+        
     }
     public void AddItem(int itemID)
     {
