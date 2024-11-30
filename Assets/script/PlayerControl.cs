@@ -12,12 +12,15 @@ public class PlayerControl : MonoBehaviour
     public float _dashDuration = 0.2f;
     private float _timeSinceLastPress = 0f;
     private float _GroundJumpValue = 0f;
+    public float maxDistance = 10f;
 
 
     public Transform cameraTransform;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public Transform PlayerBody;
+    public GameObject shotVisualizer;
+    public Camera playerCamera;
 
     private Rigidbody _rb;
 
@@ -25,11 +28,23 @@ public class PlayerControl : MonoBehaviour
     private bool _isDashing;
     private bool _isKeyPressed;
 
+    public Color hitColor = Color.green;
+    public Color defaultColor = Color.red;
+    private LineRenderer lineRenderer;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         _rb = GetComponent<Rigidbody>();
         _inventory = GetComponent<SystemInventory>();
+
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.02f;
+        lineRenderer.endWidth = 0.02f;
+        lineRenderer.positionCount = 2; 
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = defaultColor;
+        lineRenderer.endColor = defaultColor; 
     }
 
     void Update()
@@ -47,7 +62,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && !_isGrounded)
         {
             _isKeyPressed = true;
-            _dashSpeed += 0.1f * Time.deltaTime;
+            // _dashSpeed += 0.1f * Time.deltaTime;
         }
         else if (_isKeyPressed) 
         {
@@ -68,6 +83,9 @@ public class PlayerControl : MonoBehaviour
         {
             _isDashing = true;
         }
+
+        RayCastShoot();
+        
     }
 
     private Vector3 GetInputDirection()
@@ -109,9 +127,10 @@ public class PlayerControl : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(groundCheck.position, _groundCheckRadius, groundLayer);
 
-        if (_isGrounded )
+        if (_isGrounded)
         {
             _GroundJumpValue = 1f;
+            _isDashing = false;
         }
 
         if (_GroundJumpValue == 1 && Input.GetButtonDown("Jump"))
@@ -136,4 +155,36 @@ public class PlayerControl : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, transform.position + direction.normalized * _moveSpeed * _dashSpeed, Time.deltaTime / _dashDuration);
     }
 
+    private void RayCastShoot() {
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        
+        lineRenderer.SetPosition(0, ray.origin);
+        lineRenderer.SetPosition(1, ray.origin + ray.direction * 100); 
+
+        
+        if (Physics.Raycast(ray, out hit))
+        {
+            
+            lineRenderer.startColor = hitColor;
+            lineRenderer.endColor = hitColor;
+
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                Renderer renderer = hit.collider.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    renderer.material.color = hitColor; 
+                }
+            }
+        }
+        else
+        {
+            
+            lineRenderer.startColor = defaultColor;
+            lineRenderer.endColor = defaultColor;
+        }
+    }
 }
