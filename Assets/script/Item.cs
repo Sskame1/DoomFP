@@ -7,6 +7,8 @@ public class Item : ScriptableObject
     public Sprite itemIcon;
     public int itemID;
     public int quantity;
+    public bool isUsable;
+    public bool isInUse;
 
     public void AddQuantity(int amount)
     {

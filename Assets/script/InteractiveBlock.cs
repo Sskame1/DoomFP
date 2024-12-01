@@ -15,7 +15,7 @@ public class InteractiveBlock : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && IsPlayerInRange())
+        if (Input.GetKeyDown(KeyCode.X) && IsPlayerInRange())
         {
             Interact();
         }

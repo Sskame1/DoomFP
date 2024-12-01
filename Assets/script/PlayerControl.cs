@@ -84,6 +84,8 @@ public class PlayerControl : MonoBehaviour
             _isDashing = true;
         }
 
+        
+
         RayCastShoot();
         
     }
