@@ -14,18 +14,16 @@ public class ControlPlayer : MonoBehaviour
     private float _DashForce = 10;
     private float _dashCooldown = 1f;
     private bool _CanDash = true;
-    private bool _IsRunOnWall = false;
     public LayerMask groundLayer;
     public Transform groundChecker;
     private Rigidbody _rb;
     [SerializeField]
     private Camera _PlayerCamera;
-    [SerializeField]
-    private BoxCollider WallChecker; 
-
+    private RunOnWall _RunOnWall;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _RunOnWall = GetComponent<RunOnWall>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -67,29 +65,15 @@ public class ControlPlayer : MonoBehaviour
 
     private void Events() {
         _IsGrounded = IsGrounded();
-        _IsRunOnWall = IsRunOnWall();
-
-        if (_IsRunOnWall) 
-        {
-            startRunOnWall();
-        }
+        RunOnWall();
+        
     }
 
     private void HandleInput() 
     {
-        if (_IsRunOnWall) 
+        if (Input.GetButtonDown("Jump")) 
         {
-             if (Input.GetButtonDown("Jump")) 
-                {
-                    Jump();
-                    EndRunOnWall();
-                }
-        } else 
-        {
-            if (Input.GetButtonDown("Jump")) 
-                {
-                    Jump();
-                }
+            Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && _CanDash) 
@@ -126,27 +110,38 @@ public class ControlPlayer : MonoBehaviour
        return Physics.CheckSphere(groundChecker.position, _groundCheckerRadius, groundLayer);
     }
 
-    private bool IsRunOnWall() 
+    private void RunOnWall() 
     {
-        bool isWallRun = false;
-        if (WallChecker.CompareTag("WallRun")) {
-            isWallRun = true;
+        float tiltAngle = 15f;
+        float tiltSpeed = 5f;
+
+        if (_RunOnWall.runWall) 
+        {
+            if(_RunOnWall.IsLeftRun) 
+            {
+                Vector3 targetRotation = new Vector3(0, 0, tiltAngle);
+                _PlayerCamera.transform.localRotation = Quaternion.Slerp(
+                _PlayerCamera.transform.localRotation,
+                Quaternion.Euler(targetRotation),
+                Time.deltaTime * tiltSpeed
+                );    
+            } else 
+            {
+                Vector3 targetRotation = new Vector3(0, 0, -tiltAngle);
+                _PlayerCamera.transform.localRotation = Quaternion.Slerp(
+                _PlayerCamera.transform.localRotation,
+                Quaternion.Euler(targetRotation),
+                Time.deltaTime * tiltSpeed
+                );
+            }
         } else 
         {
-            isWallRun = false;
+            _PlayerCamera.transform.localRotation = Quaternion.Slerp(
+            _PlayerCamera.transform.localRotation,
+            Quaternion.Euler(Vector3.zero),
+            Time.deltaTime * tiltSpeed
+            );
         }
-
-        return isWallRun;
     }
-
-    private void startRunOnWall() 
-    {
-        _rb.useGravity = false;
-    }
-
-    private void EndRunOnWall() 
-    {
-        _rb.useGravity = true;
-    }
-
+    
 }
