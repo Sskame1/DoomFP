@@ -19,11 +19,9 @@ public class ControlPlayer : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField]
     private Camera _PlayerCamera;
-    private RunOnWall _RunOnWall;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _RunOnWall = GetComponent<RunOnWall>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -65,7 +63,6 @@ public class ControlPlayer : MonoBehaviour
 
     private void Events() {
         _IsGrounded = IsGrounded();
-        RunOnWall();
         
     }
 
@@ -73,7 +70,8 @@ public class ControlPlayer : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump")) 
         {
-            Jump();
+           Jump();
+             
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && _CanDash) 
@@ -108,40 +106,5 @@ public class ControlPlayer : MonoBehaviour
     private bool IsGrounded() 
     {
        return Physics.CheckSphere(groundChecker.position, _groundCheckerRadius, groundLayer);
-    }
-
-    private void RunOnWall() 
-    {
-        float tiltAngle = 15f;
-        float tiltSpeed = 5f;
-
-        if (_RunOnWall.runWall) 
-        {
-            if(_RunOnWall.IsLeftRun) 
-            {
-                Vector3 targetRotation = new Vector3(0, 0, tiltAngle);
-                _PlayerCamera.transform.localRotation = Quaternion.Slerp(
-                _PlayerCamera.transform.localRotation,
-                Quaternion.Euler(targetRotation),
-                Time.deltaTime * tiltSpeed
-                );    
-            } else 
-            {
-                Vector3 targetRotation = new Vector3(0, 0, -tiltAngle);
-                _PlayerCamera.transform.localRotation = Quaternion.Slerp(
-                _PlayerCamera.transform.localRotation,
-                Quaternion.Euler(targetRotation),
-                Time.deltaTime * tiltSpeed
-                );
-            }
-        } else 
-        {
-            _PlayerCamera.transform.localRotation = Quaternion.Slerp(
-            _PlayerCamera.transform.localRotation,
-            Quaternion.Euler(Vector3.zero),
-            Time.deltaTime * tiltSpeed
-            );
-        }
-    }
-    
+    }    
 }

@@ -239,9 +239,9 @@ GameObject:
   - component: {fileID: 191192602}
   - component: {fileID: 191192601}
   - component: {fileID: 191192600}
-  m_Layer: 3
-  m_Name: Cube (4)
-  m_TagString: WallRun
+  m_Layer: 6
+  m_Name: WallRun
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,9 +449,9 @@ GameObject:
   - component: {fileID: 594683568}
   - component: {fileID: 594683567}
   - component: {fileID: 594683566}
-  m_Layer: 3
-  m_Name: Cube (5)
-  m_TagString: WallRun
+  m_Layer: 6
+  m_Name: WallRun
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -645,35 +645,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 781164916}
-  - component: {fileID: 781164915}
   m_Layer: 0
-  m_Name: WallChecker
+  m_Name: WallCheckerLeft
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &781164915
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781164914}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &781164916
 Transform:
   m_ObjectHideFlags: 0
@@ -683,7 +661,38 @@ Transform:
   m_GameObject: {fileID: 781164914}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1054183257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &836833606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 836833608}
+  m_Layer: 0
+  m_Name: WallCheckerRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &836833608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836833606}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -899,7 +908,8 @@ GameObject:
   - component: {fileID: 1054183255}
   - component: {fileID: 1054183264}
   - component: {fileID: 1054183259}
-  - component: {fileID: 1054183262}
+  - component: {fileID: 1054183265}
+  - component: {fileID: 1054183266}
   m_Layer: 0
   m_Name: Player
   m_TagString: player
@@ -973,6 +983,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1643668950}
   - {fileID: 781164916}
+  - {fileID: 836833608}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1054183259
@@ -1002,24 +1013,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1054183262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054183252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0272c87d1f3b44fbb75c505ad389d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  groundChecker: {fileID: 1643668950}
-  _PlayerCamera: {fileID: 963194227}
-  WallChecker: {fileID: 781164915}
 --- !u!136 &1054183264
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1043,6 +1036,39 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1054183265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054183252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0272c87d1f3b44fbb75c505ad389d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundChecker: {fileID: 1643668950}
+  _PlayerCamera: {fileID: 963194227}
+--- !u!114 &1054183266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054183252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5314369e893b55a43ba9a3c0d8577ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runWall: 0
+  IsLeftRun: 0
+  RightChecker: {fileID: 836833608}
+  LeftChecker: {fileID: 781164916}
 --- !u!1 &1218737907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,9 +1330,9 @@ GameObject:
   - component: {fileID: 1667586353}
   - component: {fileID: 1667586352}
   - component: {fileID: 1667586351}
-  m_Layer: 3
-  m_Name: Cube (3)
-  m_TagString: WallRun
+  m_Layer: 6
+  m_Name: WallRun
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

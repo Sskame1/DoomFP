@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - player
-  - WallRun
+  - wallrun
   layers:
   - Default
   - TransparentFX
@@ -13,7 +13,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - wallrun
   - 
   - 
   - 
