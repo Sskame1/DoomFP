@@ -6,14 +6,13 @@ public class ControlPlayer : MonoBehaviour
 {
     
     private float _moveSpeed = 5f;
+    private float _Run = 1f;
+    private bool _IsRun;
     private float _speedRotCamer = 2f;
     private float _cameraPitch = 0f;
     private bool _IsGrounded; 
     private float _groundCheckerRadius = 0.1f;
     private float _jumpForce = 5f;
-    private float _DashForce = 10;
-    private float _dashCooldown = 1f;
-    private bool _CanDash = true;
     public LayerMask groundLayer;
     public Transform groundChecker;
     private Rigidbody _rb;
@@ -41,7 +40,7 @@ public class ControlPlayer : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         move.Normalize();
-        _rb.MovePosition(_rb.position + move * _moveSpeed * Time.deltaTime);
+        _rb.MovePosition(_rb.position + move * _moveSpeed * _Run * Time.deltaTime);
     }
 
     private void RotatePlayer() 
@@ -63,7 +62,7 @@ public class ControlPlayer : MonoBehaviour
 
     private void Events() {
         _IsGrounded = IsGrounded();
-        
+        Run();
     }
 
     private void HandleInput() 
@@ -74,25 +73,25 @@ public class ControlPlayer : MonoBehaviour
              
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _CanDash) 
+        if (Input.GetKeyDown(KeyCode.LeftShift)) 
         {
-            StartCoroutine(Dash());
+           _IsRun = true;
+        } 
+        if (Input.GetKeyUp(KeyCode.LeftShift)) 
+        {
+            _IsRun = false;
         }
     }
 
-    private IEnumerator Dash() 
+    private void Run() 
     {
-        _CanDash = false;
-
-        Vector3 DashDirect = _PlayerCamera.transform.forward;
-        DashDirect.y = 0;
-
-        DashDirect.Normalize();
-
-        _rb.AddForce(DashDirect * _DashForce, ForceMode.Impulse);
-        yield return new WaitForSeconds(_dashCooldown);
-
-        _CanDash = true;
+        if (_IsRun)
+        {
+            _Run = 2f;
+        } else 
+        {
+            _Run = 1f;
+        }
     }
 
     private void Jump() 

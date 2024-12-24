@@ -15,13 +15,14 @@ public class WeaponStats
 {
     public string weaponName;
     public WeaponType type;
+    public bool MeleeType;
     public int ammoCount;
     public int damage;
     public float fireRate;
     public float range;
     public GameObject bulletPrefab;
 
-    public WeaponStats(string weaponName, WeaponType type, int ammoCount, int damage, float fireRate, float range, GameObject bulletPrefab,bool inInventory)
+    public WeaponStats(string weaponName, WeaponType type, int ammoCount, int damage, float fireRate, float range, GameObject bulletPrefab,bool MeleeType)
     {
         this.weaponName = weaponName;
         this.type = type;
@@ -30,6 +31,7 @@ public class WeaponStats
         this.fireRate = fireRate;
         this.range = range;
         this.bulletPrefab = bulletPrefab;
+        this.MeleeType = MeleeType;
     }
 }
 
@@ -43,17 +45,28 @@ public abstract class WeaponBase : MonoBehaviour
         Debug.Log($"Weapon Initialized: {stats.weaponName}, Type: {stats.type}, Ammo: {stats.ammoCount}, Damage: {stats.damage}");
     }
 
+    public virtual void Attack() 
+    {
+        if(stats.MeleeType) 
+        {
+            Debug.Log($"{stats.weaponName}: Attack!");
+        }
+    }
+
     public virtual void Shoot()
     {
-        if (stats.ammoCount > 0)
+        if(!stats.MeleeType) 
         {
-            FireBullet();
-            stats.ammoCount--;
-            Debug.Log($"{stats.weaponName} fired! Remaining ammo: {stats.ammoCount}");
-        }
-        else
-        {
-            Debug.Log("Out of ammo!");
+            if (stats.ammoCount > 0)
+            {
+                FireBullet();
+                stats.ammoCount--;
+                Debug.Log($"{stats.weaponName} fired! Remaining ammo: {stats.ammoCount}");
+            }
+            else
+            {
+                Debug.Log("Out of ammo!");
+            }
         }
     }
 

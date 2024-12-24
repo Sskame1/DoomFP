@@ -9,9 +9,9 @@ public class Gun : WeaponBase
         base.Start(); 
     }
 
-    public override void FireBullet() // Измените уровень доступа на public
+    public override void Shoot() // Измените уровень доступа на public
     {
-        base.FireBullet();
+        base.Shoot();
         // Здесь можно добавить уникальную логику для пистолета
     }
 }

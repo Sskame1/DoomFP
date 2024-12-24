@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthPack : Item
+public class HealthPack : ItemBase
 {
     public int healthRestored; // Количество восстановленного здоровья
 

@@ -2,12 +2,12 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Consumable, // Используемые на игроке (например, аптечки)
+    ForPlayer, // Используемые на игроке (например, аптечки)
     Equipable,  // Одеваемые предметы (например, броня)
     Resource     // Ресурсы (например, патроны)
 }
 
-public abstract class Item : MonoBehaviour // Наследуем от MonoBehaviour для использования в Unity
+public abstract class ItemBase : MonoBehaviour // Наследуем от MonoBehaviour для использования в Unity
 {
     public string itemName; // Название предмета
     public ItemType itemType; // Тип предмета
@@ -16,7 +16,10 @@ public abstract class Item : MonoBehaviour // Наследуем от MonoBehavi
     // Метод для использования предмета
     public virtual void Use()
     {
-        if (count > 0)
+        if (count == 0) 
+        {
+            Destroy(this.gameObject);
+        } else if (count > 0)
         {
             Debug.Log($"Used item: {itemName}");
             count--;
@@ -24,6 +27,7 @@ public abstract class Item : MonoBehaviour // Наследуем от MonoBehavi
         }
         else
         {
+            
             Debug.Log("No more items to use!");
         }
     }
